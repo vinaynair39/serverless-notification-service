@@ -12,7 +12,9 @@ provider:
   region: ap-south-1
   iamRoleStatements:
     - ${file(iam/SendMailIAM.yml):SendMailIAM}
+    - ${file(iam/SendSMSIAM.yml):SendSMSIAM}
     - ${file(iam/NotificationQueueIAM.yml):NotificationQueueIAM}
+
 resources:
   Resources:
     NotificationQueue: ${file(resources/NotificationQueue.yml):NotificationQueue}
