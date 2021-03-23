@@ -1,0 +1,35 @@
+service: notification-service
+frameworkVersion: "2"
+
+plugins:
+  - serverless-bundle
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  lambdaHashingVersion: 20201221
+  region: ap-south-1
+  iamRoleStatements:
+    - ${file(iam/SendMailIAM.yml):SendMailIAM}
+    - ${file(iam/NotificationQueueIAM.yml):NotificationQueueIAM}
+resources:
+  Resources:
+    NotificationQueue: ${file(resources/NotificationQueue.yml):NotificationQueue}
+  Outputs:
+    NotificationQueueArn: ${file(resources/NotificationQueue.yml):Outputs.NotificationQueueArn}
+    NotificationQueueUrl: ${file(resources/NotificationQueue.yml):Outputs.NotificationQueueUrl}
+
+functions:
+  sendMail:
+    handler: src/lambdas/sendMail.handler
+    events:
+      - sqs:
+          arn: ${self:custom.NotificationQueue.arn}
+          batchSize: 1
+
+custom:
+  NotificationQueue:
+    name: projectName-NotificationQueue-${opt:stage}
+    arn: !GetAtt NotificationQueue.Arn
+    url: !Ref NotificationQueue

@@ -1,0 +1,6 @@
+TempleSMSIAM:
+  Effect: Allow
+  Action:
+    - sns:Publish
+    - sns:SetSMSAttributes
+  Resource: "*"

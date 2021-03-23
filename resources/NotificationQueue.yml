@@ -1,0 +1,14 @@
+NotificationQueue:
+  Type: AWS::SQS::Queue
+  Properties:
+    QueueName: ${self:custom.NotificationQueue.name}
+
+Outputs:
+  NotificationQueueArn:
+    Value: ${self:custom.NotificationQueue.arn}
+    Export:
+      Name: ${self:custom.NotificationQueue.name}-Arn
+  NotificationQueueUrl:
+    Value: ${self:custom.NotificationQueue.url}
+    Export:
+      Name: ${self:custom.NotificationQueue.name}-Url

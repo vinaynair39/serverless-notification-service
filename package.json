@@ -1,0 +1,11 @@
+{
+  "name": "notification-service",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "serverless-bundle": "^4.2.2"
+  }
+}
